@@ -12,23 +12,16 @@ public class DistributeCandies {
 	}
 	
 	public int distributeCandies(int[] candies) {
-        Map map = new HashMap<Integer, Integer>();
-		Set unique = new HashSet<Integer>();
+        Set unique = new HashSet<Integer>();
 		
         for (int i=0; i<candies.length; i++) {
-        	if(map.containsKey(candies[i])) {
-        		map.put(candies[i], map.get(candies[i] + 1));
-        	}
-        	else
-        		map.put(candies, 1);
-        	
         	if (!unique.contains(candies[i]))
         		unique.add(candies[i]);
+        	
+        	if (unique.size() > candies.length/2)
+        		return candies.length/2;
         }
 		
-        if (candies.length/2 > unique.size())
-        	return unique.size();
-        else
-        	return candies.length/2;
+        return unique.size();
     }
 }
