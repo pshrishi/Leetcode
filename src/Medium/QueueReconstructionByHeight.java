@@ -17,7 +17,7 @@ public class QueueReconstructionByHeight {
 	}
 	
 	public int[][] reconstructQueue(int[][] people) {
-		Map<Integer, ArrayList<Number>> map = new TreeMap<Integer, ArrayList<Number>>(
+		Map<Integer, ArrayList<Person>> map = new TreeMap<Integer, ArrayList<Person>>(
 				new Comparator<Integer>() {
 
 					@Override
@@ -30,31 +30,31 @@ public class QueueReconstructionByHeight {
 		int total = people.length;
         
         for (int i=0; i<total; i++) {
-    		Number n = new Number(people[i][0], people[i][1]);
+    		Person n = new Person(people[i][0], people[i][1]);
     		
     		if(map.containsKey(n.h) && map.get(n.h).size() > 0) {
-    			ArrayList<Number> list = map.get(n.h);
+    			ArrayList<Person> list = map.get(n.h);
     			list.add(n);
     			map.put(n.h, list);
     		}
     		else {
-    			ArrayList<Number> list = new ArrayList<>();
+    			ArrayList<Person> list = new ArrayList<>();
     			list.add(n);
     			map.put(n.h, list);
     		}
         }
         
         for (Integer key: map.keySet()) {
-        	ArrayList<Number> list = map.get(key);
+        	ArrayList<Person> list = map.get(key);
         	Collections.sort(list);
         	map.put(key, list);
         }
         
-        ArrayList<Number> result = new ArrayList<>();
+        ArrayList<Person> result = new ArrayList<>();
 
         for (Integer key: map.keySet()) {
-        	ArrayList<Number> list = map.get(key);
-        	for (Number n: list) {
+        	ArrayList<Person> list = map.get(key);
+        	for (Person n: list) {
         		result.add(n.k, n);
         	}
         }
@@ -62,10 +62,10 @@ public class QueueReconstructionByHeight {
         return numberArrayToIntArray(result);
     }
 	
-	private int[][] numberArrayToIntArray(ArrayList<Number> list) {
+	private int[][] numberArrayToIntArray(ArrayList<Person> list) {
 		int[][] result = new int[list.size()][2];
 		int count = 0;
-		for (Number n: list) {
+		for (Person n: list) {
 			result[count][0] = n.h;
 			result[count][1] = n.k;
 			count++;
@@ -74,17 +74,17 @@ public class QueueReconstructionByHeight {
 		return result;
 	}
 
-	class Number implements Comparable<Number>{
+	class Person implements Comparable<Person>{
 		int h;
 		int k;
 		
-		Number (int _h, int _k) {
+		Person (int _h, int _k) {
 			h = _h;
 			k = _k;
 		}
 
 		@Override
-		public int compareTo(Number o) {
+		public int compareTo(Person o) {
 			if (this.k > o.k)
 				return 1;
 			else if(this.k < o.k)
